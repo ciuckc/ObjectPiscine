@@ -8,9 +8,12 @@ class Singleton {
   Singleton& operator=(const Singleton&) noexcept = delete;
   Singleton& operator=(Singleton&&) noexcept = delete;
 
-  static Singleton& getInstance() { static T* instance = new T{}; }
+  static T& getInstance() {
+    static T instance{};
+    return instance;
+  }
 
  protected:
   Singleton() noexcept = default;
-  ~Singleton() noexcept = default;
+  virtual ~Singleton() noexcept = default;
 };
