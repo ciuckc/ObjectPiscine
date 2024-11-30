@@ -1,16 +1,15 @@
 add_executable(${PROJECT_NAME}
 main.cpp
 Worker.cpp
-Tool.cpp
 Shovel.cpp
 Hammer.cpp
 ${PROJECT_SOURCE_DIR}/inc/Position.hpp
 ${PROJECT_SOURCE_DIR}/inc/Statistic.hpp
 ${PROJECT_SOURCE_DIR}/inc/Worker.hpp
-${PROJECT_SOURCE_DIR}/inc/Tool.hpp
 ${PROJECT_SOURCE_DIR}/inc/Hammer.hpp
 ${PROJECT_SOURCE_DIR}/inc/Shovel.hpp
 ${PROJECT_SOURCE_DIR}/inc/Workshop.hpp
+${PROJECT_SOURCE_DIR}/inc/WorkerToolManager.hpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/inc)

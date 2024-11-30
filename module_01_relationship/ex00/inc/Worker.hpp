@@ -8,18 +8,12 @@
 
 class Worker;
 
+#include "ITool.hpp"
 #include "IWorkshop.hpp"
 #include "Position.hpp"
 #include "Statistic.hpp"
-#include "Tool.hpp"
-
-class Tool;
 
 class IWorkshop;
-
-template <typename RequiredTool>
-  requires std::is_base_of_v<Tool, RequiredTool>
-class Workshop;
 
 class Worker {
  public:
@@ -40,14 +34,14 @@ class Worker {
   void setStatistic(const Statistic& stats) { this->stats_ = stats; }
   [[nodiscard]] const Statistic& getStatistic() const { return stats_; }
 
+  void giveTool(ITool* tool);
+  void takeTool(ITool* tool);
+
+  void useTool(ITool* tool);
+
   template <typename T>
-    requires std::is_base_of_v<Tool, T>
-  [[nodiscard]] Tool* getTool() const;
-
-  void giveTool(Tool* tool);
-  void takeTool(Tool* tool);
-
-  void useTool(const Tool* tool);
+    requires std::is_base_of_v<ITool, T>
+  [[nodiscard]] ITool* getTool() const;
 
   void subscribeToWorkshop(IWorkshop* workshop);
   void unsubscribeFromWorkshop(IWorkshop* workshop);
@@ -58,7 +52,6 @@ class Worker {
  private:
   std::string name_{};
   std::vector<IWorkshop*> workshops_{};
-  std::vector<Tool*> tools_{};
   Statistic stats_{};
   Position pos_{};
 };
@@ -66,16 +59,12 @@ class Worker {
 std::ostream& operator<<(std::ostream& out, const Worker& obj);
 
 template <typename T>
-  requires std::is_base_of_v<Tool, T>
-Tool* Worker::getTool() const {
-  for (auto* tool : this->tools_) {
-    if (dynamic_cast<T*>(tool) != nullptr) {
-      return tool;
-    }
-  }
+  requires std::is_base_of_v<ITool, T>
+ITool* Worker::getTool() const {
   return nullptr;
 }
-template<typename Tool>
+
+template <typename Tool>
 void Worker::work(IWorkshop* workshop) {
   if (const auto iter = std::ranges::find(this->workshops_, workshop); iter == this->workshops_.end()) {
     std::cerr << "Worker, " << this->name_ << ", is not subscribed/allowed to this workshop!\n";
@@ -87,5 +76,4 @@ void Worker::work(IWorkshop* workshop) {
     return;
   }
   std::cout << "Worker, " << this->name_ << ", started to work!\n";
-  this->useTool(tool);
 }

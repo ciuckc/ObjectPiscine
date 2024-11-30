@@ -1,15 +1,20 @@
 #pragma once
 
-#include "Tool.hpp"
+#include <cstdint>
 
-class Hammer : public Tool {
+#include "ITool.hpp"
+
+class Hammer : public ITool {
  public:
   Hammer() = default;
   Hammer(Hammer&&) = default;
   Hammer(const Hammer&) = delete;
   Hammer& operator=(Hammer&&) = default;
   Hammer& operator=(const Hammer&) = delete;
-  ~Hammer() override;
+  ~Hammer() = default;
 
   void use() override;
+
+ private:
+  std::uint64_t num_of_uses_;
 };

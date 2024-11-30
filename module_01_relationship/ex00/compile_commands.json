@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/build/src",
+  "command": "/usr/bin/c++  -I/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/inc -std=gnu++23 -o CMakeFiles/relationship.dir/main.cpp.o -c /home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/main.cpp",
+  "file": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/main.cpp",
+  "output": "src/CMakeFiles/relationship.dir/main.cpp.o"
+},
+{
+  "directory": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/build/src",
+  "command": "/usr/bin/c++  -I/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/inc -std=gnu++23 -o CMakeFiles/relationship.dir/Worker.cpp.o -c /home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/Worker.cpp",
+  "file": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/Worker.cpp",
+  "output": "src/CMakeFiles/relationship.dir/Worker.cpp.o"
+},
+{
+  "directory": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/build/src",
+  "command": "/usr/bin/c++  -I/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/inc -std=gnu++23 -o CMakeFiles/relationship.dir/Shovel.cpp.o -c /home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/Shovel.cpp",
+  "file": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/Shovel.cpp",
+  "output": "src/CMakeFiles/relationship.dir/Shovel.cpp.o"
+},
+{
+  "directory": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/build/src",
+  "command": "/usr/bin/c++  -I/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/inc -std=gnu++23 -o CMakeFiles/relationship.dir/Hammer.cpp.o -c /home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/Hammer.cpp",
+  "file": "/home/scristia/Desktop/projects/ObjectPiscine/module_01_relationship/ex00/src/Hammer.cpp",
+  "output": "src/CMakeFiles/relationship.dir/Hammer.cpp.o"
+}
+]

@@ -1,16 +1,18 @@
 #pragma once
 
-#include "Tool.hpp"
-#include "Worker.hpp"
+#include <cstdint>
+#include "ITool.hpp"
 
-class Shovel : public Tool {
+class Shovel : public ITool {
  public:
   Shovel() = default;
   Shovel(const Shovel&) = delete;
   Shovel& operator=(const Shovel&) = delete;
   Shovel(Shovel&&) = default;
   Shovel& operator=(Shovel&&) = default;
-  ~Shovel() override;
+  ~Shovel() = default;
 
   void use() override;
+ private:
+  std::uint64_t num_of_uses_{};
 };

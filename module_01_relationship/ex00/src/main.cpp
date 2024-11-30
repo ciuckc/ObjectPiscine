@@ -38,7 +38,6 @@ int main() {
     good_worker.takeTool(shovel_ptr);
     good_worker.useTool(shovel_ptr);
 
-    shovel.assignToWorker(&bad_worker);
     good_worker.useTool(shovel_ptr);
     bad_worker.useTool(shovel_ptr);
     good_worker.giveTool(shovel_ptr);
