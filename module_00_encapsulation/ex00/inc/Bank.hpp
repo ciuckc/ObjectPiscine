@@ -1,19 +1,18 @@
 #pragma once
 
 #include <stdint.h>
-#include <sys/types.h>
 
 #include <cstdint>
 #include <memory>
 #include <ostream>
 #include <unordered_map>
-#include <vector>
 
 class Bank {
  public:
   class Account;
   using account_ptr_t = std::unique_ptr<Account>;
-  using accounts_t = std::unordered_map<id_t, account_ptr_t>;
+  using account_id = uint32_t;
+  using accounts_t = std::unordered_map<account_id, account_ptr_t>;
 
  public:
   Bank(const double liquidity);
@@ -22,16 +21,16 @@ class Bank {
   Bank& operator=(const Bank&) = default;
   ~Bank() = default;
 
-  void depositMoney(const id_t id, const double money);
-  void getLoan(const id_t id, const double money);
+  void depositMoney(const account_id id, const double money);
+  void getLoan(const account_id id, const double money);
 
   const accounts_t& getAccounts() const;
   const double& getLiquidity() const;
 
   const account_ptr_t& createAccount(const double initial_value);
-  double deleteAccount(const id_t id);
+  double deleteAccount(const account_id id);
 
-  const account_ptr_t& operator[](const id_t idx) const;
+  const account_ptr_t& operator[](const account_id idx) const;
 
  private:
   void addLiquidity(const double value);

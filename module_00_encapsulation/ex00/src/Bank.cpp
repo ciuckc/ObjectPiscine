@@ -2,12 +2,8 @@
 
 #include <sys/types.h>
 
-#include <algorithm>
-#include <cstdint>
 #include <iostream>
 #include <ostream>
-#include <random>
-#include <stdexcept>
 
 // Bank implementation
 
@@ -29,7 +25,8 @@ uint32_t Bank::getUniqueAccountID() const {
   auto num_gen = std::mt19937(time(nullptr));
   auto num_id = num_gen();
 
-  for (; this->accounts_.find(num_id) != this->accounts_.end(); num_id = num_gen()) {}
+  for (; this->accounts_.find(num_id) != this->accounts_.end(); num_id = num_gen()) {
+  }
   return num_id;
 }
 
@@ -47,12 +44,12 @@ const Bank::account_ptr_t& Bank::createAccount(const double initial_value) {
   auto value_after_tax = this->takeBankCut(initial_value);
   account_ptr_t new_account(new Account(value_after_tax));
   new_account->id_ = num_id;
-  std::pair<id_t, account_ptr_t> value_to_acc(num_id, std::move(new_account));
+  std::pair<account_id, account_ptr_t> value_to_acc(num_id, std::move(new_account));
   this->accounts_.emplace(std::move(value_to_acc));
   return accounts_[num_id];
 }
 
-void Bank::depositMoney(const id_t id, const double money) {
+void Bank::depositMoney(const account_id id, const double money) {
   if (money < 0) {
     throw std::invalid_argument("Value can't be negative");
   }
@@ -64,7 +61,7 @@ void Bank::depositMoney(const id_t id, const double money) {
   it->second->value_ += value_after_tax;
 }
 
-void Bank::getLoan(const id_t id, const double money) {
+void Bank::getLoan(const account_id id, const double money) {
   if (money < 0) {
     throw std::invalid_argument("Value can't be negative");
   }
@@ -79,7 +76,7 @@ void Bank::getLoan(const id_t id, const double money) {
   accounts_[id]->value_ += money;
 }
 
-double Bank::deleteAccount(const id_t id) {
+double Bank::deleteAccount(const account_id id) {
   auto it = this->accounts_.find(id);
   if (it == this->accounts_.end()) {
     throw std::invalid_argument("Index doesn't exist");
@@ -89,7 +86,7 @@ double Bank::deleteAccount(const id_t id) {
   return money_left;
 }
 
-const Bank::account_ptr_t& Bank::operator[](const id_t idx) const {
+const Bank::account_ptr_t& Bank::operator[](const account_id idx) const {
   auto it = this->accounts_.find(idx);
   if (it == this->accounts_.end()) {
     throw std::invalid_argument("Index doesn't exist.");
