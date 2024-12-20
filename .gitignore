@@ -1,6 +1,11 @@
 # Jetbrains
 .idea
 
+build
+
+*/**/cmake-build-release
+*/**/cmake-build-debug
+
 # build folder
 build
 
