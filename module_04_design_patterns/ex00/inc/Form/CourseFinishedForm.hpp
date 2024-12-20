@@ -1,4 +1,5 @@
 #pragma once
+
 #include "IForm.hpp"
 
 class CourseFinishedForm : public IForm

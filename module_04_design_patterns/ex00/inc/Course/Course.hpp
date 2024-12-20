@@ -3,16 +3,16 @@
 #include <string>
 #include <vector>
 
-#include "Professor.hpp"
-#include "Student.hpp"
+class Professor;
+class Student;
 
 class Course
 {
 public:
     explicit Course(std::string name, Professor* professor);
 
-    void Assign(Professor* professor);
-    void Subscribe(Student* student);
+    void assign(Professor* professor);
+    void subscribe(Student* student);
 
 private:
     std::string _name;

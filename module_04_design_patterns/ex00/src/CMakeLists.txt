@@ -44,10 +44,8 @@ set(PERSON_HEADER
         ${PERSON_HEADER_DIR}/Contract/IStaff.hpp
         ${PERSON_HEADER_DIR}/Headmaster.hpp
         ${PERSON_HEADER_DIR}/Student.hpp
-        ${PERSON_HEADER_DIR}/Person.hpp
         ${PERSON_HEADER_DIR}/Professor.hpp
         ${PERSON_HEADER_DIR}/Secretary.hpp
-        ${PERSON_HEADER_DIR}/Staff.hpp
 )
 
 # SchoolSpace
@@ -66,8 +64,6 @@ set(SCHOOL_SPACE_HEADER
 
 add_executable(${PROJECT_NAME}
         main.cpp
-        Person.cpp
-        Room.cpp
         ${COURSE_HEADER}
         ${EVENT_HEADER}
         ${PERSON_HEADER}

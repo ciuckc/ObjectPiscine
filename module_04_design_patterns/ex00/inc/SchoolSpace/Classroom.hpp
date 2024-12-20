@@ -3,15 +3,18 @@
 #include "Course.hpp"
 #include "ISchoolSpace.hpp"
 
+class Course;
+class IPerson;
+
 class Classroom : public ISchoolSpace
 {
 public:
     ~Classroom() override = default;
 
-    void assignCourse(Course* _course);
-    bool canEnter(IPerson*) override;
-    void enter(IPerson*) override;
-    void exit(IPerson*) override;
+    void assignCourse(Course* course);
+    bool canEnter(IPerson* person) override;
+    void enter(IPerson* person) override;
+    void exit(IPerson* person) override;
     std::vector<IPerson*> getOccupants() const override;
     long long getId() const override;
 

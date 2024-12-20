@@ -1,10 +1,12 @@
 #pragma once
 #include "IPerson.hpp"
 
+class IForm;
+
 class IStaff : public IPerson
 {
 public:
     virtual ~IStaff() = default;
 
-    virtual void sign(IForm* p_form) = 0;
+    virtual void sign(IForm* form) = 0;
 };

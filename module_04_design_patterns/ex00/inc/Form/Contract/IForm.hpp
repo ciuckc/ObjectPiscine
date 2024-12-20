@@ -3,7 +3,7 @@
 class IForm
 {
 public:
-    virtual void execute() = 0;
-
     virtual ~IForm() = default;
+
+    virtual void execute() = 0;
 };
