@@ -2,9 +2,9 @@
 
 #include <cstdint>
 
-#include "ITool.hpp"
+#include "Tool.hpp"
 
-class Hammer : public ITool {
+class Hammer : public Tool {
  public:
   Hammer() = default;
   Hammer(Hammer&&) = default;

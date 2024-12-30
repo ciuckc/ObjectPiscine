@@ -7,7 +7,7 @@
 #include "Worker.hpp"
 
 template <typename RequiredTool>
-  requires std::is_base_of_v<ITool, RequiredTool>
+  requires std::is_base_of_v<Tool, RequiredTool>
 class Workshop final : public IWorkshop {
  public:
   Workshop() = default;
@@ -28,7 +28,7 @@ class Workshop final : public IWorkshop {
       return;
     }
     if (!worker->getTool<RequiredTool>()) {
-      throw std::runtime_error("Worker doesn't have this tool!");
+      throw std::runtime_error(std::format("Worker {0}, doesn't have this tool!", worker->getName()));
     }
     this->workers_.push_back(worker);
   }

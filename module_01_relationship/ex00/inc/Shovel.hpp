@@ -1,9 +1,10 @@
 #pragma once
 
 #include <cstdint>
-#include "ITool.hpp"
 
-class Shovel : public ITool {
+#include "Tool.hpp"
+
+class Shovel : public Tool {
  public:
   Shovel() = default;
   Shovel(const Shovel&) = delete;
@@ -13,6 +14,7 @@ class Shovel : public ITool {
   ~Shovel() = default;
 
   void use() override;
+
  private:
   std::uint64_t num_of_uses_{};
 };

@@ -7,9 +7,8 @@
 #include <utility>
 #include <vector>
 
-#include "ITool.hpp"
-#include "Position.hpp"
-#include "Statistic.hpp"
+#include "IWorkshop.hpp"
+#include "Tool.hpp"
 
 Worker::Worker(std::string name) : name_{std::move(name)} {
   std::cout << "Worker " << this->name_ << " constructed!\n";
@@ -20,7 +19,11 @@ Worker::Worker() {
 }
 
 Worker::Worker(Worker&& rhs) noexcept
-    : name_{std::move(rhs.name_)}, stats_{std::move(rhs.stats_)}, pos_{std::move(rhs.pos_)} {
+    : name_{std::move(rhs.name_)},
+      workshops_(std::move(rhs.workshops_)),
+      tools_(std::move(rhs.tools_)),
+      stats_{std::move(rhs.stats_)},
+      pos_{std::move(rhs.pos_)} {
   rhs.pos_ = {};
   rhs.stats_ = {};
   std::cout << "Worker move constructed!\n";
@@ -30,7 +33,9 @@ Worker& Worker::operator=(Worker&& rhs) noexcept {
   if (this == &rhs) {
     return *this;
   }
-  this->name_ = std::move(rhs.name_);
+  this->name_ = std::exchange(rhs.name_, {});
+  this->workshops_ = std::exchange(rhs.workshops_, {});
+  this->tools_ = std::exchange(tools_, {});
   this->pos_ = std::exchange(rhs.pos_, {});
   this->stats_ = std::exchange(rhs.stats_, {});
   std::cout << "Worker move assigned!\n";
@@ -48,6 +53,7 @@ void Worker::subscribeToWorkshop(IWorkshop* workshop) {
     std::cout << "Worker, " << this->name_ << ", is already subscribed to workshop!\n";
     return;
   }
+  std::cout << "Worker, " << this->name_ << " subscribed to workshop.\n";
   workshop->subscribe(this);
   this->workshops_.push_back(workshop);
 }
@@ -68,8 +74,43 @@ std::ostream& operator<<(std::ostream& out, const Worker& obj) {
   return out;
 }
 
-void Worker::giveTool(ITool* tool) {}
+void Worker::giveTool(Tool* tool) {
+  if (tool == nullptr) {
+    return;
+  }
+  const auto iter = std::ranges::find(this->tools_, tool);
+  if (iter != this->tools_.end() && *iter == tool) {
+    return;
+  }
+  this->tools_.push_back(tool);
+  tool->assignToWorker(this);
+  std::cout << "Worker " << this->name_ << " has a new tool!\n";
+}
 
-void Worker::takeTool(ITool* tool) {}
+void Worker::takeTool(Tool* tool) {
+  if (tool == nullptr) {
+    return;
+  }
+  const auto iter = std::ranges::find(this->tools_, tool);
+  if (iter == this->tools_.end()) {
+    return;
+  }
+  Tool* curr_tool_ptr = *iter;
+  this->tools_.erase(iter);
+  curr_tool_ptr->takeFromCurrentWorker();
+  std::cout << "Worker " << this->name_ << " doesn't have a tool anymore!\n";
+}
 
-void Worker::useTool(ITool* tool) {}
+void Worker::useTool(const Tool* tool) {
+  if (tool == nullptr) {
+    std::cout << "Worker " << this->name_ << " can't use a tool that doesn't exist!\n";
+    return;
+  }
+  auto iter = std::find(this->tools_.begin(), this->tools_.end(), tool);
+  if (iter == this->tools_.end()) {
+    std::cout << "Worker " << this->name_ << " doesn't have this tool!\n";
+    return;
+  }
+  (*iter)->use();
+  std::cout << "Worker " << this->name_ << " is using the tool!\n";
+}

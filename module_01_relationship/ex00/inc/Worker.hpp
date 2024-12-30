@@ -6,13 +6,10 @@
 #include <type_traits>
 #include <vector>
 
-class Worker;
-
-#include "ITool.hpp"
-#include "IWorkshop.hpp"
 #include "Position.hpp"
 #include "Statistic.hpp"
 
+class Tool;
 class IWorkshop;
 
 class Worker {
@@ -34,14 +31,14 @@ class Worker {
   void setStatistic(const Statistic& stats) { this->stats_ = stats; }
   [[nodiscard]] const Statistic& getStatistic() const { return stats_; }
 
-  void giveTool(ITool* tool);
-  void takeTool(ITool* tool);
+  void giveTool(Tool* tool);
+  void takeTool(Tool* tool);
 
-  void useTool(ITool* tool);
+  void useTool(const Tool* tool);
 
   template <typename T>
-    requires std::is_base_of_v<ITool, T>
-  [[nodiscard]] ITool* getTool() const;
+    requires std::is_base_of_v<Tool, T>
+  [[nodiscard]] Tool* getTool() const;
 
   void subscribeToWorkshop(IWorkshop* workshop);
   void unsubscribeFromWorkshop(IWorkshop* workshop);
@@ -52,6 +49,7 @@ class Worker {
  private:
   std::string name_{};
   std::vector<IWorkshop*> workshops_{};
+  std::vector<Tool*> tools_{};
   Statistic stats_{};
   Position pos_{};
 };
@@ -59,8 +57,13 @@ class Worker {
 std::ostream& operator<<(std::ostream& out, const Worker& obj);
 
 template <typename T>
-  requires std::is_base_of_v<ITool, T>
-ITool* Worker::getTool() const {
+  requires std::is_base_of_v<Tool, T>
+Tool* Worker::getTool() const {
+  for (auto* tool : this->tools_) {
+    if (dynamic_cast<T*>(tool) != nullptr) {
+      return tool;
+    }
+  }
   return nullptr;
 }
 
